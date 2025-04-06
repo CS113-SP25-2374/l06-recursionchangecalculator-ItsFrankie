@@ -22,11 +22,47 @@ public class ChangeCalculatorRecursive extends ChangeCalculator {
      * @param cents a monetary value in cents
      * @return the total number of unique combinations of coins of which the given value is comprised
      */
-    public static List<String> calculateRecursive(int cents) {
+    public static List<String> calculateRecursive(int cents) 
+    {
         // TODO:
         // Implement a recursive solution following the given documentation.
         List<String> combinations = new ArrayList<>();
+        int[] coinCount = new int[COINS.length];
 
+        calculateChange(cents, combinations, coinCount, 0);
         return combinations;
     }
+
+
+
+    static void calculateChange(int change, List<String> combinations, int[] coinCount, int coinIndex)
+    {
+        //1. Find the end conditon
+        if(change == 0)
+        {
+            combinations.add(combinationToString(coinCount));
+            return;
+        }
+
+        //2. Handle errors
+        
+         
+
+        //3. Recurse for this coin
+        if (change >=  COINS[coinIndex])
+        {
+            //NEW coin filter statement
+            coinCount[coinIndex]++;
+            calculateChange(change - COINS[coinIndex], combinations, coinCount, coinIndex);
+            coinCount[coinIndex]--;
+        }
+
+
+        //4. check the next coin (replacing "for")
+        if (++coinIndex < COINS.length)
+        {
+            calculateChange(change, combinations, coinCount, coinIndex);
+        }
+        
+    } //END of calculateChange method
 }
